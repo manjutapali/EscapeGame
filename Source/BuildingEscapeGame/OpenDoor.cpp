@@ -21,18 +21,27 @@ void UOpenDoor::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
+	
+	ActorThatOpens = GetWorld()->GetFirstPlayerController()->GetPawn();
+	
+}
+
+
+// Called to open the door
+
+void UOpenDoor::RotateDoorZ()
+{
 	// Accessing the owner
 	FString OwnerName = GetOwner()->GetName();
 
 	//Setting rotation for the door
-	UE_LOG(LogTemp, Warning, TEXT("Rotating the %s to 75 degrees"), *OwnerName);
+	//UE_LOG(LogTemp, Warning, TEXT("Rotating the %s to 75 degrees"), *OwnerName);
 
 	AActor* Owner = GetOwner();
 
 	FRotator newRotation = FRotator(0.f, 75.0f, 0.f);
 
 	Owner->SetActorRotation(newRotation);
-	
 }
 
 
@@ -42,5 +51,12 @@ void UOpenDoor::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompo
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
 
 	// ...
+
+	// Poll everyframe
+	if (PressurePlate->IsOverlappingActor(ActorThatOpens))
+	{
+		RotateDoorZ();
+	}
+
 }
 
