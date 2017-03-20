@@ -44,4 +44,10 @@ private:
 
 	// Gets physics body in reach
 	const FHitResult GetFirstPhysicsBodyInReach();
+
+	//Gets the line trace end 
+	FVector GetLineTraceEnd();
+
+	// Gets the start position of Line trace
+	FVector GetLineTraceStart();
 };
